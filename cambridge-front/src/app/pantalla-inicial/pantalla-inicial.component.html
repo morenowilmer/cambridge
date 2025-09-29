@@ -1,19 +1,19 @@
 <p-fieldset legend="Cambridge">
   <p-tabView [(activeIndex)]="activeIndex">
     <p-tabPanel header="Área">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      <app-area></app-area>
     </p-tabPanel>
     <p-tabPanel header="Oficina">
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium...
-      </p>
+      <app-oficina></app-oficina>
     </p-tabPanel>
     <p-tabPanel header="Salones">
-      <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+      <app-salones></app-salones>
     </p-tabPanel>
     <p-tabPanel header="Empleados">
-      <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+      <app-empleados></app-empleados>
+    </p-tabPanel>
+    <p-tabPanel header="Reportes">
+      <app-reportes></app-reportes>
     </p-tabPanel>
   </p-tabView>
 </p-fieldset>
