@@ -7,16 +7,15 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "area")
+@Table(name = "oficina")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AreaEntity implements Serializable {
+public class OficinaEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -25,6 +24,5 @@ public class AreaEntity implements Serializable {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private LocalDate fechaCreacion;
-    private LocalDate fechaFin;
+    private Integer idArea;
 }
