@@ -32,9 +32,13 @@ public class OficinaController {
     @ResponseBody
     @PostMapping(value = "/guardar", produces = "application/json", consumes = "application/json")
     public ResponseEntity<GeneralResponse<OficinaDto>> guardarOficina(@RequestBody OficinaDto oficinaDto) {
-        OficinaDto response = oficinaPort.guardarOficina(oficinaDto);
+        try {
+            OficinaDto response = oficinaPort.guardarOficina(oficinaDto);
 
-        return ResponseEntity.ok(GeneralResponse.exito(response));
+            return ResponseEntity.ok(GeneralResponse.exito(response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(GeneralResponse.error(null));
+        }
     }
 
     @ResponseBody
@@ -48,8 +52,12 @@ public class OficinaController {
     @ResponseBody
     @DeleteMapping(value = "/eliminar/{id}", produces = "application/json")
     public ResponseEntity<GeneralResponse<Boolean>> eliminarOficina(@PathVariable("id") Integer id) {
-        oficinaPort.eliminarOficina(id);
+        try {
+            oficinaPort.eliminarOficina(id);
 
-        return ResponseEntity.ok(GeneralResponse.exito(true));
+            return ResponseEntity.ok(GeneralResponse.exito(true));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(GeneralResponse.error(false));
+        }
     }
 }

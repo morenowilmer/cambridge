@@ -32,9 +32,13 @@ public class AreaController {
     @ResponseBody
     @PostMapping(value = "/guardar", produces = "application/json", consumes = "application/json")
     public ResponseEntity<GeneralResponse<AreaDto>> guardarArea(@RequestBody AreaDto areaDto) {
-        AreaDto response = areaPort.guardarArea(areaDto);
+        try {
+            AreaDto response = areaPort.guardarArea(areaDto);
 
-        return ResponseEntity.ok(GeneralResponse.exito(response));
+            return ResponseEntity.ok(GeneralResponse.exito(response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(GeneralResponse.error(null));
+        }
     }
 
     @ResponseBody
@@ -48,8 +52,12 @@ public class AreaController {
     @ResponseBody
     @DeleteMapping(value = "/eliminar/{id}", produces = "application/json")
     public ResponseEntity<GeneralResponse<Boolean>> eliminarArea(@PathVariable("id") Integer id) {
-        areaPort.eliminarArea(id);
+        try {
+            areaPort.eliminarArea(id);
 
-        return ResponseEntity.ok(GeneralResponse.exito(true));
+            return ResponseEntity.ok(GeneralResponse.exito(true));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(GeneralResponse.error(false));
+        }
     }
 }
