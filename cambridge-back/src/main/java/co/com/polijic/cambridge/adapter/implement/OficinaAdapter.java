@@ -2,6 +2,7 @@ package co.com.polijic.cambridge.adapter.implement;
 
 import co.com.polijic.cambridge.adapter.port.OficinaPort;
 import co.com.polijic.cambridge.domain.dto.OficinaDto;
+import co.com.polijic.cambridge.repository.port.AreaRepositoryPort;
 import co.com.polijic.cambridge.repository.port.OficinaRepositoryPort;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,21 @@ import java.util.List;
 public class OficinaAdapter implements OficinaPort {
 
     private final OficinaRepositoryPort oficinaRepositoryPort;
+    private final AreaRepositoryPort areaRepositoryPort;
 
-    public OficinaAdapter(OficinaRepositoryPort oficinaRepositoryPort) {
+    public OficinaAdapter(OficinaRepositoryPort oficinaRepositoryPort,
+                          AreaRepositoryPort areaRepositoryPort) {
         this.oficinaRepositoryPort = oficinaRepositoryPort;
+        this.areaRepositoryPort = areaRepositoryPort;
     }
 
     @Override
     public List<OficinaDto> consultarOficnas() {
-        return oficinaRepositoryPort.findAll();
+        return oficinaRepositoryPort.findAll().stream()
+                .map(o -> {
+                    o.setArea(areaRepositoryPort.findById(o.getIdArea()));
+                    return o;
+                }).toList();
     }
 
     @Override
