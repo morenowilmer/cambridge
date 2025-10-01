@@ -1,1 +1,206 @@
-<p>salones works!</p>
+<div class="flex w-full justify-content-center">
+  <div class="card">
+    <div class="flex justify-content-end align-items-center mb-3">
+      <p-button
+        icon="pi pi-plus"
+        [rounded]="true"
+        severity="success"
+        label="Crear"
+        (onClick)="showDialog()"
+      >
+      </p-button>
+    </div>
+
+    <p-table [value]="datosSalones" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center">Bloque</th>
+          <th class="text-center">Numero salon</th>
+          <th class="text-center">Capacidad</th>
+          <th class="text-center">Grado</th>
+          <th class="text-center">Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-salon>
+        <tr>
+          <td class="text-center">{{ salon.bloque }}</td>
+          <td class="text-center">{{ salon.numeroSalon }}</td>
+          <td class="text-center">{{ salon.capacidad }}</td>
+          <td class="text-center">{{ salon.grado }}</td>
+          <td class="text-center">{{ salon.labelEstado }}</td>
+          <td class="text-center">
+            <div class="flex gap-2 justify-content-center">
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                severity="info"
+                (onClick)="showDialog(salon)"
+              >
+              </p-button>
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                severity="danger"
+                (onClick)="eliminarSalon(salon)"
+              >
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center p-4">
+            <div class="flex flex-column align-items-center gap-3">
+              <i
+                class="pi pi-inbox"
+                style="font-size: 3rem; color: var(--text-color-secondary)"
+              ></i>
+              <span
+                class="text-xl font-semibold"
+                style="color: var(--text-color-secondary)"
+              >
+                No hay datos para mostrar
+              </span>
+              <span class="text-sm" style="color: var(--text-color-secondary)">
+                Aún no se han registrado salones de clase
+              </span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-dialog
+    header="{{ titleModal }} salón"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '50rem' }"
+  >
+    <form [formGroup]="formulario">
+      <div class="grid">
+        <!-- Bloque -->
+        <div class="col-12 lg:col-6">
+          <label for="bloque" class="block mb-2 font-semibold"
+            >Bloque <span class="text-red-500">*</span></label
+          >
+          <input
+            id="bloque"
+            type="text"
+            pInputText
+            formControlName="bloque"
+            class="w-full"
+            placeholder="Ingrese el bloque"
+          />
+          @if (formulario.get('bloque')?.invalid &&
+          formulario.get('bloque')?.touched) {
+
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Numero Salon -->
+        <div class="col-12 lg:col-6">
+          <label for="numeroSalon" class="block mb-2 font-semibold"
+            >Número de Salón <span class="text-red-500">*</span></label
+          >
+          <input
+            id="numeroSalon"
+            type="text"
+            pInputText
+            formControlName="numeroSalon"
+            class="w-full"
+            placeholder="Ingrese el número de salón"
+          />
+          @if (formulario.get('numeroSalon')?.invalid &&
+          formulario.get('numeroSalon')?.touched) {
+
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Capacidad -->
+        <div class="col-12 lg:col-6">
+          <label for="capacidad" class="block mb-2 font-semibold"
+            >Capacidad <span class="text-red-500">*</span></label
+          >
+          <input
+            id="capacidad"
+            type="number"
+            pInputText
+            formControlName="capacidad"
+            class="w-full"
+            placeholder="Ingrese la capacidad del salón"
+          />
+          @if (formulario.get('capacidad')?.invalid &&
+          formulario.get('capacidad')?.touched) {
+
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Grado -->
+        <div class="col-12 lg:col-6">
+          <label for="grado" class="block mb-2 font-semibold"
+            >Grado <span class="text-red-500">*</span></label
+          >
+          <input
+            id="grado"
+            type="text"
+            pInputText
+            formControlName="grado"
+            class="w-full"
+            placeholder="Ingrese el grado"
+          />
+          @if (formulario.get('grado')?.invalid &&
+          formulario.get('grado')?.touched) {
+
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+        
+        <!-- Estado -->
+        <div class="col-12 lg:col-6">
+          <label for="estado" class="block mb-2 font-semibold"
+            >Estado <span class="text-red-500">*</span></label
+          >
+          <p-dropdown
+            [options]="estadosClase"
+            optionLabel="nombre"
+            optionValue="codigo"
+            formControlName="estado"
+            placeholder="Seleccione un estado"
+            class="w-full"
+            inputId="estado"
+          ></p-dropdown>
+          @if (formulario.get('estado')?.invalid &&
+          formulario.get('estado')?.touched) {
+
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-content-end gap-2 mt-4">
+        <p-button
+          label="Cancelar"
+          severity="secondary"
+          (onClick)="visible = false"
+        ></p-button>
+        <p-button
+          label="Guardar"
+          severity="success"
+          [disabled]="formulario.invalid"
+          (onClick)="guardarSalonClase()"
+        ></p-button>
+      </div>
+    </form>
+  </p-dialog>
+</div>
+<p-toast />
+<p-confirmDialog />

@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,7 +27,6 @@ import { DropdownModule } from 'primeng/dropdown';
     ToastModule,
     ButtonModule,
     DialogModule,
-    CalendarModule,
     DropdownModule,
     InputTextModule,
     ConfirmDialogModule,
