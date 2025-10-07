@@ -77,4 +77,12 @@ public class PersonaController {
 
         return ResponseEntity.ok(GeneralResponse.exito(response));
     }
+
+    @ResponseBody
+    @GetMapping(value = "/tipos-profesor", produces = "application/json")
+    public ResponseEntity<GeneralResponse<List<TipoDto>>> consultarTiposProfesor() {
+        List<TipoDto> response = personaPort.consultarTiposProfesores();
+
+        return ResponseEntity.ok(GeneralResponse.exito(response));
+    }
 }

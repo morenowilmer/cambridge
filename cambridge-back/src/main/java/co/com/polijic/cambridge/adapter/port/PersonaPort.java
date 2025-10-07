@@ -13,4 +13,5 @@ public interface PersonaPort {
     void eliminarPersona(Integer id);
     List<TipoDto> consultarTiposIdentificacion();
     List<TipoDto> consultarTiposClasificacion();
+    List<TipoDto> consultarTiposProfesores();
 }

@@ -1,6 +1,5 @@
 package co.com.polijic.cambridge.repository.entities;
 
-import co.com.polijic.cambridge.domain.dto.OficinaDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +24,7 @@ public class PersonaEntity implements Serializable {
     private Integer id;
     private String nombre;
     private String apellido;
+    private String identificacion;
     private String tipoIdentificacion;
     private LocalDate fechaNacimiento;
     private String celular;
@@ -33,6 +33,5 @@ public class PersonaEntity implements Serializable {
     private LocalDate fechaVinculacion;
     private String clasificacion;
     private String estado;
-    private String idOficina;
-    private OficinaDto oficina;
+    private Integer idOficina;
 }
