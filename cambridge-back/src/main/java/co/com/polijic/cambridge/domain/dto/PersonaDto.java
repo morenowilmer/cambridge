@@ -19,6 +19,7 @@ public class PersonaDto implements Serializable {
     private Integer id;
     private String nombre;
     private String apellido;
+    private String identificacion;
     private String tipoIdentificacion;
     private LocalDate fechaNacimiento;
     private String celular;
@@ -26,9 +27,10 @@ public class PersonaDto implements Serializable {
     private String direccion;
     private LocalDate fechaVinculacion;
     private String estado;
-    private String idOficina;
+    private Integer idOficina;
     private String clasificacion;
-    private OficinaDto oficinaDto;
+    private OficinaDto oficinaObjeto;
     private TipoDto tipoIdentificacionObjeto;
     private TipoDto tipoClasificacionObjeto;
+    private ProfesorDto profesor;
 }
