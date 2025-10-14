@@ -3,6 +3,7 @@ package co.com.polijic.cambridge.adapter.implement;
 import co.com.polijic.cambridge.adapter.port.SalonClasePort;
 import co.com.polijic.cambridge.domain.dto.SalonClaseDto;
 import co.com.polijic.cambridge.domain.dto.TipoDto;
+import co.com.polijic.cambridge.domain.dto.reportes.SalonClaseReporte;
 import co.com.polijic.cambridge.domain.enums.EnumEstadoSalonClase;
 import co.com.polijic.cambridge.repository.port.SalonClaseRepositoryPort;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,17 @@ public class SalonClaseAdapter implements SalonClasePort {
                 .map(e -> TipoDto.builder()
                         .codigo(e.getCodigo())
                         .nombre(e.getTitulo()).build()).toList();
+    }
+
+    @Override
+    public List<SalonClaseReporte> consultarSalonesClaseReporte() {
+        return this.consultarSalonesClase().stream()
+                .map(s -> SalonClaseReporte.builder()
+                        .id(s.getId())
+                        .bloque(s.getBloque())
+                        .numeroSalon(s.getNumeroSalon())
+                        .capacidad(s.getCapacidad())
+                        .grado(s.getGrado())
+                        .estado(s.getLabelEstado()).build()).toList();
     }
 }

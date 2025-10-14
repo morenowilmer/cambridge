@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "salon_clase")
+@Table(name = "persona")
 @Getter
 @Setter
 @Builder

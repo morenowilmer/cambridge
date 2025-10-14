@@ -20,4 +20,5 @@ public interface PersonaRepositoryPort {
     TipoDto findTipoProfesorByCodigo(String codigo);
     ProfesorDto findProfesorByIdPersona(Integer idPersona);
     ProfesorDto saveProfesor(ProfesorDto profesorDto);
+    void eliminarProfesor(Integer idProfesor);
 }

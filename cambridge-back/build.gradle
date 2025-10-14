@@ -36,6 +36,20 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation("org.modelmapper:modelmapper:3.2.2")
 
+	//JasperReports
+	implementation("net.sf.jasperreports:jasperreports:6.21.5")
+	implementation 'net.sf.jasperreports:jasperreports-fonts:6.20.0'
+	implementation 'org.apache.xmlgraphics:batik-svg-dom:1.17'
+	implementation 'org.apache.xmlgraphics:batik-dom:1.17'
+	implementation 'org.apache.xmlgraphics:batik-bridge:1.17'
+	implementation 'org.apache.xmlgraphics:batik-util:1.17'
+	implementation 'org.apache.xmlgraphics:batik-codec:1.17'
+	implementation 'org.apache.xmlgraphics:batik-transcoder:1.17'
+	implementation 'org.apache.xmlgraphics:batik-ext:1.17'
+	implementation 'org.apache.xmlgraphics:xmlgraphics-commons:2.9'
+	implementation 'org.apache.xmlgraphics:batik-svggen:1.17'
+	implementation 'com.mpobjects.jasperreports.font:jasperreports-fonts-liberation:2.00.4'
+
 	//flyway-core
 //	implementation("org.flywaydb:flyway-core:11.13.2")
 }

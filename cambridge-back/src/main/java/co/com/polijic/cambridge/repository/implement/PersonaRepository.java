@@ -104,4 +104,9 @@ public class PersonaRepository implements PersonaRepositoryPort {
 
         return modelMapper.map(profesorRepository.save(entity), ProfesorDto.class);
     }
+
+    @Override
+    public void eliminarProfesor(Integer idProfesor) {
+        profesorRepository.deleteById(idProfesor);
+    }
 }

@@ -1,5 +1,6 @@
 package co.com.polijic.cambridge.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.io.Serial;
@@ -21,10 +22,12 @@ public class PersonaDto implements Serializable {
     private String apellido;
     private String identificacion;
     private String tipoIdentificacion;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate fechaNacimiento;
     private String celular;
     private String correo;
     private String direccion;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate fechaVinculacion;
     private String estado;
     private Integer idOficina;
@@ -32,5 +35,5 @@ public class PersonaDto implements Serializable {
     private OficinaDto oficinaObjeto;
     private TipoDto tipoIdentificacionObjeto;
     private TipoDto tipoClasificacionObjeto;
-    private ProfesorDto profesor;
+    private ProfesorDto profesorObjeto;
 }
