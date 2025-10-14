@@ -18,6 +18,7 @@ public class ProfesorEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer idPersona;
+    @Column(name = "ID_SALON_CLASE")
     private Integer idSalon;
     private String tipoProfesor;
 }

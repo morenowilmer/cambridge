@@ -1,1 +1,349 @@
-<p>empleados works!</p>
+<div class="flex w-full justify-content-center">
+  <div class="card">
+    <div class="flex justify-content-end align-items-center mb-3">
+      <p-button
+        icon="pi pi-plus"
+        [rounded]="true"
+        severity="success"
+        label="Crear"
+        (onClick)="showDialog()"
+      >
+      </p-button>
+    </div>
+
+    <p-table [value]="datosEmpleados" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center">Identificación</th>
+          <th class="text-center">Nombres</th>
+          <th class="text-center">Estado</th>
+          <th class="text-center">Oficina</th>
+          <th class="text-center">Clasificación</th>
+          <th class="text-center">Tipo profesor - Salon</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-empleado>
+        <tr>
+          <td class="text-center">{{ empleado.identificacion }}</td>
+          <td class="text-center">{{ empleado.nombre }} {{ empleado.apellido }}</td>
+          <td class="text-center">{{ empleado.estado }}</td>
+          <td class="text-center">{{ empleado.oficinaObjeto?.nombre }}</td>
+          <td class="text-center">{{ empleado.tipoClasificacionObjeto?.nombre }}</td>
+          <td class="text-center">{{ empleado.profesorObjeto?.tipoProfesorObjeto?.nombre }} - {{ empleado.profesorObjeto?.salonClaseObjeto?.numeroSalon }}</td>
+          <td class="text-center">
+            <div class="flex gap-2 justify-content-center">
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                severity="info"
+                (onClick)="showDialog(empleado)"
+              >
+              </p-button>
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                severity="danger"
+                (onClick)="eliminarEmpleado(empleado)"
+              >
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center p-4">
+            <div class="flex flex-column align-items-center gap-3">
+              <i
+                class="pi pi-inbox"
+                style="font-size: 3rem; color: var(--text-color-secondary)"
+              ></i>
+              <span
+                class="text-xl font-semibold"
+                style="color: var(--text-color-secondary)"
+              >
+                No hay datos para mostrar
+              </span>
+              <span class="text-sm" style="color: var(--text-color-secondary)">
+                Aún no se han registrado oficinas
+              </span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-dialog
+    header="{{ titleModal }} empleado"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '50rem' }"
+  >
+    <form [formGroup]="formulario">
+      <div class="grid">
+        <!-- Nombre -->
+        <div class="col-12 lg:col-6">
+          <label for="nombre" class="block mb-2 font-semibold"
+            >Nombre <span class="text-red-500">*</span></label
+          >
+          <input
+            id="nombre"
+            type="text"
+            pInputText
+            formControlName="nombre"
+            class="w-full"
+            placeholder="Ingrese el nombre"
+          />
+          @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Apellido -->
+        <div class="col-12 lg:col-6">
+          <label for="apellido" class="block mb-2 font-semibold"
+            >Apellido <span class="text-red-500">*</span></label
+          >
+          <input
+            id="apellido"
+            type="text"
+            pInputText
+            formControlName="apellido"
+            class="w-full"
+            placeholder="Ingrese el apellido"
+          />
+          @if (formulario.get('apellido')?.invalid && formulario.get('apellido')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Tipo de Identificación -->
+        <div class="col-12 lg:col-6">
+          <label for="tipoIdentificacion" class="block mb-2 font-semibold">Tipo de Identificación</label>
+          <p-dropdown
+            inputId="tipoIdentificacion"
+            formControlName="tipoIdentificacion"
+            [options]="datosTipoIdentificacion"
+            optionLabel="nombre"
+            optionValue="codigo"
+            placeholder="Seleccione el tipo de identificación"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('tipoIdentificacion')?.invalid && formulario.get('tipoIdentificacion')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Identificación -->
+        <div class="col-12 lg:col-6">
+          <label for="identificacion" class="block mb-2 font-semibold">Identificación <span class="text-red-500">*</span></label>
+          <input
+            id="identificacion"
+            type="text"
+            pInputText
+            formControlName="identificacion"
+            class="w-full"
+            placeholder="Ingrese la identificación"
+          />
+          @if (formulario.get('identificacion')?.invalid && formulario.get('identificacion')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Fecha nacimiento -->
+        <div class="col-12 lg:col-6">
+          <label for="fechaNacimiento" class="block mb-2 font-semibold">Fecha de Nacimiento</label>
+          <p-calendar
+            inputId="fechaNacimiento"
+            formControlName="fechaNacimiento"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            styleClass="w-full"
+            placeholder="dd/mm/aaaa"
+            appendTo="body"
+          ></p-calendar>
+          @if (formulario.get('fechaNacimiento')?.invalid && formulario.get('fechaNacimiento')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- celular -->
+        <div class="col-12 lg:col-6">
+          <label for="celular" class="block mb-2 font-semibold">Celular <span class="text-red-500">*</span></label>
+          <input
+            id="celular"
+            type="text"
+            pInputText
+            formControlName="celular"
+            class="w-full"
+            placeholder="Ingrese el celular"
+          />
+          @if (formulario.get('celular')?.invalid && formulario.get('celular')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Correo -->
+        <div class="col-12 lg:col-6">
+          <label for="correo" class="block mb-2 font-semibold">Correo <span class="text-red-500">*</span></label>
+          <input
+            id="correo"
+            type="text"
+            pInputText
+            formControlName="correo"
+            class="w-full"
+            placeholder="Ingrese el correo"
+          />
+          @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Dirección -->
+        <div class="col-12 lg:col-6">
+          <label for="direccion" class="block mb-2 font-semibold">Dirección <span class="text-red-500">*</span></label>
+          <input
+            id="direccion"
+            type="text"
+            pInputText
+            formControlName="direccion"
+            class="w-full"
+            placeholder="Ingrese la dirección"
+          />
+          @if (formulario.get('direccion')?.invalid && formulario.get('direccion')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Fecha vinculacion -->
+        <div class="col-12 lg:col-6">
+          <label for="fechaVinculacion" class="block mb-2 font-semibold">Fecha de Vinculación</label>
+          <p-calendar
+            inputId="fechaVinculacion"
+            formControlName="fechaVinculacion"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            styleClass="w-full"
+            placeholder="dd/mm/aaaa"
+            appendTo="body"
+          ></p-calendar>
+          @if (formulario.get('fechaVinculacion')?.invalid && formulario.get('fechaVinculacion')?.touched) {
+          <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Estado -->
+        <div class="col-12 lg:col-6">
+          <label for="estado" class="block mb-2 font-semibold">Estado</label>
+          <p-dropdown
+            inputId="estado"
+            formControlName="estado"
+            [options]="estadosEmpleados"
+            optionLabel="nombre"
+            optionValue="codigo"
+            placeholder="Seleccione el estado"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('estado')?.invalid && formulario.get('estado')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Oficina -->
+        <div class="col-12 lg:col-6">
+          <label for="idOficina" class="block mb-2 font-semibold">Oficina</label>
+          <p-dropdown
+            inputId="idOficina"
+            formControlName="idOficina"
+            [options]="datosOficinas"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccione la oficina"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('idOficina')?.invalid && formulario.get('idOficina')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Clasificacion -->
+        <div class="col-12 lg:col-6">
+          <label for="clasificacion" class="block mb-2 font-semibold">Clasificación</label>
+          <p-dropdown
+            inputId="clasificacion"
+            formControlName="clasificacion"
+            [options]="datosTipoClasificacion"
+            optionLabel="nombre"
+            optionValue="codigo"
+            placeholder="Seleccione la clasificación"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('clasificacion')?.invalid && formulario.get('clasificacion')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Tipo profesor -->
+        <div class="col-12 lg:col-6">
+          <label for="tipoProfesor" class="block mb-2 font-semibold">Tipo Profesor</label>
+          <p-dropdown
+            inputId="tipoProfesor"
+            formControlName="tipoProfesor"
+            [options]="datosTipoProfesor"
+            optionLabel="nombre"
+            optionValue="codigo"
+            placeholder="Seleccione el tipo de profesor"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('tipoProfesor')?.invalid && formulario.get('tipoProfesor')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+
+        <!-- Salones -->
+        <div class="col-12 lg:col-6">
+          <label for="idSalon" class="block mb-2 font-semibold">Salón</label>
+          <p-dropdown
+            inputId="idSalon"
+            formControlName="idSalon"
+            [options]="datosSalones"
+            optionLabel="numeroSalon"
+            optionValue="id"
+            placeholder="Seleccione el salón"
+            styleClass="w-full"
+            [showClear]="true"
+          ></p-dropdown>
+          @if (formulario.get('idSalon')?.invalid && formulario.get('idSalon')?.touched) {
+            <small class="p-error block mt-1"> El campo es requerido </small>
+          }
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-content-end gap-2 mt-4">
+        <p-button
+          label="Cancelar"
+          severity="secondary"
+          (onClick)="visible = false"
+        ></p-button>
+        <p-button
+          label="Guardar"
+          severity="success"
+          [disabled]="formulario.invalid"
+          (onClick)="guardarEmpleado()"
+        ></p-button>
+      </div>
+    </form>
+  </p-dialog>
+</div>
+<p-toast />
+<p-confirmDialog />

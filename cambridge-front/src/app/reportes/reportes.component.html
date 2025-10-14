@@ -1,1 +1,31 @@
-<p>reportes works!</p>
+<div class="flex flex-column w-full align-items-center">
+    <div class="card">
+        <div class="flex justify-content-end align-items-center">
+            <p-button icon="pi pi-download" severity="success" label="Generar Reporte" 
+            (onClick)="generarReporte()">
+            </p-button>
+        </div>
+    </div>
+
+    <div class="card w-full" style="max-width: 1200px;">
+        <ng-container *ngIf="pdfSrc; else noReporte">
+            <div style="margin-top: 20px; border: 1px solid #ccc; height: 600px; width: 100%;">
+                <iframe [src]="pdfSrc" style="width: 100%; height: 100%; border: none;">
+                    Este navegador no soporta iframes, por favor, descarga el PDF.
+                    <a [href]="pdfSrc" target="_blank" download="documento.pdf">Descargar PDF</a>
+                </iframe>
+            </div>
+        </ng-container>
+        <ng-template #noReporte>
+            <div class="flex flex-column align-items-center gap-3 p-4">
+                <i class="pi pi-file-pdf" style="font-size: 3rem; color: var(--text-color-secondary)"></i>
+                <span class="text-xl font-semibold" style="color: var(--text-color-secondary)">
+                    No hay reporte generado
+                </span>
+                <span class="text-center" style="color: var(--text-color-secondary)">
+                    Haz clic en "Generar Reporte" para crear y visualizar el reporte en formato PDF.
+                </span>
+            </div>
+        </ng-template>
+    </div>
+</div>

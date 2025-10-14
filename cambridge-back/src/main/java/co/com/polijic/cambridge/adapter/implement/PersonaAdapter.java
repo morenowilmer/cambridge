@@ -6,8 +6,10 @@ import co.com.polijic.cambridge.adapter.port.SalonClasePort;
 import co.com.polijic.cambridge.domain.dto.PersonaDto;
 import co.com.polijic.cambridge.domain.dto.ProfesorDto;
 import co.com.polijic.cambridge.domain.dto.TipoDto;
+import co.com.polijic.cambridge.domain.dto.reportes.PersonaReporte;
 import co.com.polijic.cambridge.repository.implement.PersonaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,18 +41,23 @@ public class PersonaAdapter implements PersonaPort {
     }
 
     @Override
+    @Transactional
     public PersonaDto guardarPersona(PersonaDto personaDto) {
         PersonaDto persona = personaRepository.savePersona(personaDto);
 
         if (persona.getClasificacion().equals("PROFES")) {
-            personaRepository.saveProfesor(personaDto.getProfesor());
+            personaDto.getProfesorObjeto().setIdPersona(persona.getId());
+            personaRepository.saveProfesor(personaDto.getProfesorObjeto());
         }
 
         return this.cargarDatosPersona(persona.getId());
     }
 
     @Override
+    @Transactional
     public void eliminarPersona(Integer id) {
+        ProfesorDto profesor = personaRepository.findProfesorByIdPersona(id);
+        personaRepository.eliminarProfesor(profesor.getId());
         personaRepository.deletePersona(id);
     }
 
@@ -69,6 +76,23 @@ public class PersonaAdapter implements PersonaPort {
         return personaRepository.findAllTiposProfesor();
     }
 
+    @Override
+    public List<PersonaReporte> consultarReportePersonas() {
+        return this.consultarPersonas().stream()
+                .map(persona -> PersonaReporte.builder()
+                        .id(persona.getId())
+                        .nombreCompleto(persona.getNombre().concat(" ").concat(persona.getApellido()))
+                        .identificacion(persona.getIdentificacion())
+                        .tipoIdentificacion(persona.getTipoIdentificacionObjeto().getNombre())
+                        .correo(persona.getCorreo())
+                        .estado(persona.getEstado())
+                        .oficina(persona.getOficinaObjeto().getNombre())
+                        .numeroSalon(persona.getProfesorObjeto().getSalonClaseObjeto().getNumeroSalon())
+                        .clasificacion(persona.getTipoClasificacionObjeto().getNombre())
+                        .tipoProfesor(persona.getProfesorObjeto().getTipoProfesorObjeto().getNombre())
+                        .build()).toList();
+    }
+
     private PersonaDto cargarDatosPersona(Integer idPersona) {
         PersonaDto persona = personaRepository.findPersonaById(idPersona);
 
@@ -76,8 +100,8 @@ public class PersonaAdapter implements PersonaPort {
 
         TipoDto tipoIdentificacion = personaRepository.findTipoIdentificacionById(persona.getTipoIdentificacion());
         TipoDto tipoClasificacion = personaRepository.findClasificacionPersonaById(persona.getClasificacion());
-        oficinaPort.consultarOficina(persona.getIdOficina());
 
+        persona.setOficinaObjeto(oficinaPort.consultarOficina(persona.getIdOficina()));
         persona.setTipoIdentificacionObjeto(tipoIdentificacion);
         persona.setTipoClasificacionObjeto(tipoClasificacion);
 
@@ -85,7 +109,7 @@ public class PersonaAdapter implements PersonaPort {
             ProfesorDto profesor = personaRepository.findProfesorByIdPersona(persona.getId());
             profesor.setSalonClaseObjeto(salonClasePort.consultarSalonClase(profesor.getIdSalon()));
             profesor.setTipoProfesorObjeto(personaRepository.findTipoProfesorByCodigo(profesor.getTipoProfesor()));
-            persona.setProfesor(profesor);
+            persona.setProfesorObjeto(profesor);
         }
 
         return persona;

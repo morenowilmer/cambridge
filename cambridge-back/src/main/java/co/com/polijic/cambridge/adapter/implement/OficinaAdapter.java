@@ -2,6 +2,7 @@ package co.com.polijic.cambridge.adapter.implement;
 
 import co.com.polijic.cambridge.adapter.port.OficinaPort;
 import co.com.polijic.cambridge.domain.dto.OficinaDto;
+import co.com.polijic.cambridge.domain.dto.reportes.OficinaReporte;
 import co.com.polijic.cambridge.repository.port.AreaRepositoryPort;
 import co.com.polijic.cambridge.repository.port.OficinaRepositoryPort;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,17 @@ public class OficinaAdapter implements OficinaPort {
     @Override
     public void eliminarOficina(Integer idOficna) {
         oficinaRepositoryPort.delete(idOficna);
+    }
+
+    @Override
+    public List<OficinaReporte> consultarOficnasReporte() {
+        return this.consultarOficnas().stream()
+                .map(o -> OficinaReporte.builder()
+                        .idOficina(o.getId())
+                        .nombre(o.getNombre())
+                        .descripcion(o.getDescripcion())
+                        .nombreArea(o.getArea().getNombre())
+                        .build())
+                .toList();
     }
 }

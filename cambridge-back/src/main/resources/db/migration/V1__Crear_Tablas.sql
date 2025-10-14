@@ -38,6 +38,7 @@ create table persona (
     celular varchar(30),
     correo varchar(50),
     direccion varchar(100),
+    estado varchar(20),
     fecha_vinculacion date,
     clasificacion varchar(10),
     id_oficina integer,
