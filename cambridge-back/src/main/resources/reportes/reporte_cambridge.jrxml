@@ -592,7 +592,7 @@
                 <text><![CDATA[Empleados:]]></text>
             </staticText>
             <componentElement>
-                <reportElement x="31" y="339" width="512" height="60" uuid="8250a79f-b5ed-458b-8d2e-51c8efbf4b5a">
+                <reportElement positionType="Float" x="31" y="339" width="512" height="60" uuid="8250a79f-b5ed-458b-8d2e-51c8efbf4b5a">
                     <property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
                     <property name="com.jaspersoft.studio.table.style.table_header" value="Table 3_TH"/>
                     <property name="com.jaspersoft.studio.table.style.column_header" value="Table 3_CH"/>
