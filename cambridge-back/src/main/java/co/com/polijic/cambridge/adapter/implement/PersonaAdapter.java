@@ -7,7 +7,7 @@ import co.com.polijic.cambridge.domain.dto.PersonaDto;
 import co.com.polijic.cambridge.domain.dto.ProfesorDto;
 import co.com.polijic.cambridge.domain.dto.TipoDto;
 import co.com.polijic.cambridge.domain.dto.reportes.PersonaReporte;
-import co.com.polijic.cambridge.repository.implement.PersonaRepository;
+import co.com.polijic.cambridge.repository.port.PersonaRepositoryPort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +17,11 @@ import java.util.Objects;
 @Service
 public class PersonaAdapter implements PersonaPort {
 
-    private final PersonaRepository personaRepository;
+    private final PersonaRepositoryPort personaRepository;
     private final SalonClasePort salonClasePort;
     private final OficinaPort oficinaPort;
 
-    public PersonaAdapter(PersonaRepository personaRepository,
+    public PersonaAdapter(PersonaRepositoryPort personaRepository,
                           SalonClasePort salonClasePort,
                           OficinaPort oficinaPort) {
         this.personaRepository = personaRepository;
