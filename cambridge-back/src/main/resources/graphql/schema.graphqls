@@ -1,0 +1,25 @@
+type Area {
+    id: ID
+    nombre: String
+    descripcion: String
+    fechaCreacion: String
+    fechaFin: String
+}
+
+input AreaInput {
+    id: ID
+    nombre: String!
+    descripcion: String!
+    fechaFin: String
+}
+
+type Query {
+    listarAreas: [Area]!
+    buscarAreaPorId(id: ID!): Area
+}
+
+type Mutation {
+    crearArea(areaInput: AreaInput!): Area
+    actualizarArea(areaInput: AreaInput!): Area
+    eliminarArea(id: ID!): Area
+}
