@@ -36,6 +36,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation("org.modelmapper:modelmapper:3.2.2")
 
+	// GraphQL
+	implementation 'org.springframework.boot:spring-boot-starter-graphql'
+	implementation 'com.graphql-java:graphql-java-extended-scalars:21.0'
+	implementation 'com.graphql-java:graphql-java-extended-scalars:21.0'
+
 	//JasperReports
 	implementation("net.sf.jasperreports:jasperreports:6.21.5")
 	implementation 'net.sf.jasperreports:jasperreports-fonts:6.20.0'
