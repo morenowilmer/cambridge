@@ -6,6 +6,54 @@ type Area {
     fechaFin: String
 }
 
+type Oficina {
+    id: ID
+    nombre: String
+    descripcion: String
+    idArea: Int
+    area: Area
+}
+
+type SalonClase {
+    id: ID
+    bloque: String
+    numeroSalon: String
+    capacidad: Int
+    grado: String
+    labelEstado: String
+}
+
+type Tipo {
+    codigo: String
+    nombre: String
+    descripcion: String
+}
+
+type Profesor {
+    id: ID
+    idPersona: Int
+    idSalon: Int
+    tipoProfesorObjeto: Tipo
+    salonClaseObjeto: SalonClase
+}
+
+type Persona {
+    id: ID
+    nombre: String
+    apellido: String
+    identificacion: String
+    fechaNacimiento: String
+    celular: String
+    correo: String
+    direccion: String
+    fechaVinculacion: String
+    labelEstado: String
+    oficinaObjeto: Oficina
+    tipoIdentificacionObjeto: Tipo
+    tipoClasificacionObjeto: Tipo
+    profesorObjeto: Profesor
+}
+
 input AreaInput {
     id: ID
     nombre: String!
@@ -13,13 +61,70 @@ input AreaInput {
     fechaFin: String
 }
 
+input OficinaInput {
+    id: ID
+    nombre: String!
+    descripcion: String!
+    idArea: Int!
+}
+
+input SalonClaseInput {
+    id: ID
+    bloque: String!
+    numeroSalon: String!
+    capacidad: Int!
+    grado: String!
+    estado: String!
+}
+
+input ProfesorInput {
+    id: ID
+    idPersona: Int
+    idSalon: Int
+    tipoProfesor: String
+}
+
+input PersonaInput {
+    id: ID
+    nombre: String!
+    apellido: String!
+    tipoIdentificacion: String!
+    identificacion: String!
+    fechaNacimiento: String!
+    celular: String!
+    correo: String!
+    direccion: String!
+    fechaVinculacion: String!
+    estado: String!
+    idOficina: Int
+    clasificacion: String!
+    profesorObjeto: ProfesorInput
+}
+
 type Query {
     listarAreas: [Area]!
     buscarAreaPorId(id: ID!): Area
+
+    listarOficinas: [Oficina]!
+    buscarOficinaPorId(id: ID!): Oficina
+
+    listarSalonesClase: [SalonClase]!
+    buscarSalonClasePorId(id: ID!): SalonClase
+
+    listarPersonas: [Persona]!
+    buscarPersonaPorId(id: ID!): Persona
 }
 
 type Mutation {
-    crearArea(areaInput: AreaInput!): Area
-    actualizarArea(areaInput: AreaInput!): Area
+    guardarArea(areaInput: AreaInput!): Area
     eliminarArea(id: ID!): Area
+
+    guardarOficina(oficinaInput: OficinaInput!): Oficina
+    eliminarOficina(id: ID!): Oficina
+
+    guardarSalonClase(salonClaseInput: SalonClaseInput!): SalonClase
+    eliminarSalonClase(id: ID!): SalonClase
+
+    guardarPersona(personaInput: PersonaInput!): Persona
+    eliminarPersona(id: ID!): Persona
 }
